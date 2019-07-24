@@ -1,0 +1,24 @@
+{
+  "author": "Elden S. Park",
+  "dependencies": {
+    "jege": "^0.4.0",
+    "react": "^16.8.6"
+  },
+  "description": "",
+  "main": "index.js",
+  "name": "aktion",
+  "keywords": [],
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eldeni/express-isomorphic.git",
+    "directory": "packages/aktion"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.0"
+}
