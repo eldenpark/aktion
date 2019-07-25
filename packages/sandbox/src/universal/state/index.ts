@@ -7,11 +7,11 @@ import { interpolateActionType } from 'aktion';
 import { logger } from 'jege';
 import thunk from 'redux-thunk';
 
-import RawActionHandler from './RawActionHandler';
-import RawActionType from './RawActionType';
-import ReduxState, {
-  ReduxStateType,
-} from './ReduxState';
+import rawActionHandler from './rawActionHandler';
+import rawActionType from './rawActionType';
+import reduxState, {
+  ReduxState,
+} from './reduxState';
 
 const log = logger('[sandbox-web]');
 
@@ -19,11 +19,11 @@ const {
   interpolatedActionHandler,
   interpolatedActionType,
 } = interpolateActionType({
-  rawActionHandler: RawActionHandler,
-  rawActionType: RawActionType,
+  rawActionHandler,
+  rawActionType,
 });
 
-function reducer(state: ReduxStateType, action) {
+function reducer(state: ReduxState, action) {
   try {
     const actionHandler = interpolatedActionHandler[action.type]
       || interpolatedActionHandler.default;
@@ -42,8 +42,8 @@ const reduxLogger = () => (next) => (action) => {
 const enhancer = applyMiddleware(reduxLogger, thunk);
 
 function initializeStore({
-  preloadedState = ReduxState,
-}: InitializeStoreArgs<ReduxStateType> = {}): Store<ReduxStateType> {
+  preloadedState = reduxState,
+}: InitializeStoreArgs<ReduxState> = {}): Store<ReduxState> {
   return createStore(reducer, preloadedState, enhancer);
 }
 

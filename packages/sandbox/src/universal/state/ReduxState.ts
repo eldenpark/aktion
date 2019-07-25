@@ -1,9 +1,9 @@
-const State: ReduxStateType = {
+const reduxState: ReduxState = {
   count: 0,
 };
 
-export default State;
+export default reduxState;
 
-export interface ReduxStateType {
+export interface ReduxState {
   count: number;
 }

@@ -1,11 +1,11 @@
-const RawActionType: RawActionTypeType = {
+const rawActionType: RawActionType = {
   DECREMENT: 0,
   INCREMENT: 0,
 };
 
-export default RawActionType;
+export default rawActionType;
 
-export interface RawActionTypeType {
+export interface RawActionType {
   DECREMENT;
   INCREMENT;
 }

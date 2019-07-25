@@ -1,9 +1,9 @@
 import { ActionHandlerType } from 'aktion';
 
-import { RawActionTypeType } from '@@universal/state/RawActionType';
-import { ReduxStateType } from '@@universal/state/ReduxState';
+import { RawActionType } from '@@universal/state/rawActionType';
+import { ReduxState } from '@@universal/state/reduxState';
 
-const RawActionHandler: ActionHandlerType<RawActionTypeType, ReduxStateType> = {
+const RawActionHandler: ActionHandlerType<RawActionType, ReduxState> = {
   DECREMENT: {
     base: (state) => {
       return {
@@ -13,7 +13,7 @@ const RawActionHandler: ActionHandlerType<RawActionTypeType, ReduxStateType> = {
     },
   },
   INCREMENT: {
-    base: (state: ReduxStateType) => {
+    base: (state: ReduxState) => {
       return {
         ...state,
         count: state.count + 1,

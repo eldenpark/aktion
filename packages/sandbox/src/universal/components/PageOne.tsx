@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ActionType } from '@@universal/state';
-import { ReduxStateType } from '@@universal/state/ReduxState';
+import { ReduxStateType } from '@@universal/state/reduxState';
 
 const PageOne: React.FC<any> = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const PageOne: React.FC<any> = () => {
           onClick={handleClickDecrement}
           type="button"
         >
-          increment
+          decrement
         </button>
         <p>{count}</p>
       </div>
