@@ -8,7 +8,7 @@ import { logger } from 'jege';
 import thunk from 'redux-thunk';
 
 import rawActionHandler from './rawActionHandler';
-import rawActionType from './rawActionType';
+import rawActionType from './RawActionType';
 import reduxState, {
   ReduxState,
 } from './reduxState';
