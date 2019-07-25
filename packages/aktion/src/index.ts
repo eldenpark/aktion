@@ -39,12 +39,12 @@ export type Action = {
   [key: string]: any;
 };
 
-export type ActionHandler<AT, S> = {
+export type RawActionHandler<AT, S> = {
   [actionType in keyof AT]: ReducerSuite<S>;
 };
 
 interface InterpolateActionTypeArgs<AT, S> {
-  rawActionHandler: ActionHandler<AT, S>;
+  rawActionHandler: RawActionHandler<AT, S>;
   rawActionType: AT;
 }
 
