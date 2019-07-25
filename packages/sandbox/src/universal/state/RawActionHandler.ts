@@ -1,9 +1,9 @@
-import { ActionHandlerType } from 'aktion';
+import { ActionHandler } from 'aktion';
 
 import { RawActionType } from '@@universal/state/rawActionType';
 import { ReduxState } from '@@universal/state/reduxState';
 
-const RawActionHandler: ActionHandlerType<RawActionType, ReduxState> = {
+const rawActionHandler: ActionHandler<RawActionType, ReduxState> = {
   DECREMENT: {
     base: (state) => {
       return {
@@ -22,4 +22,4 @@ const RawActionHandler: ActionHandlerType<RawActionType, ReduxState> = {
   },
 };
 
-export default RawActionHandler;
+export default rawActionHandler;
