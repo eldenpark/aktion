@@ -1,37 +1,57 @@
-import { createStore as _createStore } from 'redux';
-
+import {
+  applyMiddleware,
+  createStore,
+  Store,
+} from 'redux';
+import { interpolateActionType } from 'aktion';
 import { logger } from 'jege';
+import thunk from 'redux-thunk';
 
-const log = logger('[sandbox]');
+import RawActionHandler from './RawActionHandler';
+import RawActionType from './RawActionType';
+import ReduxState, {
+  ReduxStateType,
+} from './ReduxState';
 
-const initialState = {
-  counter: 0,
-  otherInformation: '',
-};
+const log = logger('[sandbox-web]');
 
-export function createStore({
-  preloadedState,
-}: CreateStoreArgs = {}) {
-  const store = _createStore(reducer, preloadedState);
-  return store;
-}
+const {
+  interpolatedActionHandler,
+  interpolatedActionType,
+} = interpolateActionType({
+  rawActionHandler: RawActionHandler,
+  rawActionType: RawActionType,
+});
 
-function reducer(state = initialState, action) {
-  log('reducer(): action: %j, prevState: %j', action, state);
-
-  const { payload = {} } = action;
-
-  switch (action.type) {
-    case 'INCREMENT':
-      return {
-        counter: state.counter + 1,
-        otherInformation: payload.otherInformation,
-      };
-    default:
-      return state;
+function reducer(state: ReduxStateType, action) {
+  try {
+    const actionHandler = interpolatedActionHandler[action.type]
+      || interpolatedActionHandler.default;
+    return actionHandler(state, action);
+  } catch (err) {
+    log('reducer(): error: %o', err);
+    return state;
   }
 }
 
-interface CreateStoreArgs {
-  preloadedState?;
+const reduxLogger = () => (next) => (action) => {
+  log('logger(): action: %j', action);
+  return next(action);
+};
+
+const enhancer = applyMiddleware(reduxLogger, thunk);
+
+function initializeStore({
+  preloadedState = ReduxState,
+}: InitializeStoreArgs<ReduxStateType> = {}): Store<ReduxStateType> {
+  return createStore(reducer, preloadedState, enhancer);
+}
+
+export {
+  interpolatedActionType as ActionType,
+  initializeStore,
+};
+
+interface InitializeStoreArgs<S> {
+  preloadedState?: S;
 }

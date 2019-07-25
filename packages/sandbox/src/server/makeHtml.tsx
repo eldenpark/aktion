@@ -1,4 +1,4 @@
-import { createStore } from '@@universal/state';
+import { initializeStore } from '@@universal/state';
 import {
   MakeHtml,
 } from 'express-isomorphic';
@@ -18,7 +18,7 @@ const makeHtml: MakeHtml<State> = async function makeHtml({
   log('makeHtml(): requestUrl: %s, serverState: %j', requestUrl, serverState);
 
   const { socketPath, socketPort, state } = serverState;
-  const reduxStore = createStore();
+  const reduxStore = initializeStore();
   const element = (
     <ServerApp
       reduxStore={reduxStore}

@@ -1,20 +1,22 @@
-// import axios from 'axios';
-import { logger } from 'jege';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const log = logger('[example-react]');
+import { ActionType } from '@@universal/state';
+import { ReduxStateType } from '@@universal/state/ReduxState';
 
 const PageOne: React.FC<any> = () => {
   const dispatch = useDispatch();
+  const count = useSelector((state: ReduxStateType) => state.count);
 
-  // const counter = useSelector((state: any) => state.counter);
-  const otherInformation = useSelector((state: any) => state.otherInformation);
-  log('11', otherInformation);
-
-  const handleClickDispatch = React.useCallback(() => {
+  const handleClickIncrement = React.useCallback(() => {
     dispatch({
-      type: 'INCREMENT',
+      type: ActionType.INCREMENT.Base,
+    });
+  }, []);
+
+  const handleClickDecrement = React.useCallback(() => {
+    dispatch({
+      type: ActionType.DECREMENT.Base,
     });
   }, []);
 
@@ -23,11 +25,18 @@ const PageOne: React.FC<any> = () => {
       <p>Page One</p>
       <div>
         <button
-          onClick={handleClickDispatch}
+          onClick={handleClickIncrement}
           type="button"
         >
-          dispatch (Increment)
+          increment
         </button>
+        <button
+          onClick={handleClickDecrement}
+          type="button"
+        >
+          increment
+        </button>
+        <p>{count}</p>
       </div>
     </div>
   );
