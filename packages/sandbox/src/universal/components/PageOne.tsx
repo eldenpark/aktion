@@ -2,11 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ActionType } from '@@universal/state';
-import { ReduxStateType } from '@@universal/state/reduxState';
+import { ReduxState } from '@@universal/state/reduxState';
 
 const PageOne: React.FC<any> = () => {
   const dispatch = useDispatch();
-  const count = useSelector((state: ReduxStateType) => state.count);
+  const count = useSelector((state: ReduxState) => state.count);
 
   const handleClickIncrement = React.useCallback(() => {
     dispatch({
