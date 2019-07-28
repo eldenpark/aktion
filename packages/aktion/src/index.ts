@@ -2,11 +2,11 @@ import { logger } from 'jege';
 
 const log = logger('[aktion]');
 
-export function interpolateActionType<AT, S>({
-  rawActionHandler,
-  rawActionType,
-}: InterpolateActionTypeArgs<AT, S>): InterpolateActionTypeResult<AT, S> {
-  log('rawActionType', rawActionType, rawActionHandler);
+export function createActionType<AT extends ActionType>(
+  rawActionType: AT,
+): InterpolatedActionType<AT> {
+  log('rawActionType: %j', rawActionType);
+
   const interpolatedActionType = {} as any;
   Object.keys(rawActionType)
     .forEach((actionType) => {
@@ -17,6 +17,12 @@ export function interpolateActionType<AT, S>({
       };
     });
 
+  return interpolatedActionType;
+}
+
+export function createActionHandler<AT extends ActionType, S>(
+  rawActionHandler: RawActionHandler<AT, S>,
+): InterpolatedActionHandler<S> {
   const interpolatedActionHandler = {
     default: (state) => state,
   } as any;
@@ -28,10 +34,7 @@ export function interpolateActionType<AT, S>({
       interpolatedActionHandler[`${actionType}_SUCCESS`] = (reducerSuite as any).success;
     });
 
-  return {
-    interpolatedActionHandler,
-    interpolatedActionType,
-  };
+  return interpolatedActionHandler;
 }
 
 export type Action = {
@@ -43,15 +46,9 @@ export type RawActionHandler<AT, S> = {
   [actionType in keyof AT]: ReducerSuite<S>;
 };
 
-interface InterpolateActionTypeArgs<AT, S> {
-  rawActionHandler: RawActionHandler<AT, S>;
-  rawActionType: AT;
-}
-
-interface InterpolateActionTypeResult<AT, S> {
-  interpolatedActionHandler: InterpolatedActionHandler<S>;
-  interpolatedActionType: InterpolatedActionType<AT>;
-}
+type ActionType = {
+  [actionType: string]: any;
+};
 
 type InterpolatedActionType<AT> = {
   [T in keyof AT]: {

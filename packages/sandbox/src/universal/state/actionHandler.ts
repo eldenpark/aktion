@@ -1,6 +1,9 @@
-import { RawActionHandler } from 'aktion';
+import {
+  createActionHandler,
+  RawActionHandler,
+} from 'aktion';
 
-import { RawActionTypeType } from '@@universal/state/RawActionType';
+import { RawActionTypeType } from '@@universal/state/ActionType';
 import { ReduxState } from '@@universal/state/reduxState';
 
 const rawActionHandler: RawActionHandler<RawActionTypeType, ReduxState> = {
@@ -22,4 +25,4 @@ const rawActionHandler: RawActionHandler<RawActionTypeType, ReduxState> = {
   },
 };
 
-export default rawActionHandler;
+export default createActionHandler(rawActionHandler);

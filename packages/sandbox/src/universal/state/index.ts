@@ -3,31 +3,22 @@ import {
   createStore,
   Store,
 } from 'redux';
-import { interpolateActionType } from 'aktion';
 import { logger } from 'jege';
 import thunk from 'redux-thunk';
 
-import rawActionHandler from './rawActionHandler';
-import rawActionType from './RawActionType';
+import actionHandler from './actionHandler';
+import ActionType from './ActionType';
 import reduxState, {
   ReduxState,
 } from './reduxState';
 
 const log = logger('[sandbox-web]');
 
-const {
-  interpolatedActionHandler,
-  interpolatedActionType,
-} = interpolateActionType({
-  rawActionHandler,
-  rawActionType,
-});
-
 function reducer(state: ReduxState, action) {
   try {
-    const actionHandler = interpolatedActionHandler[action.type]
-      || interpolatedActionHandler.default;
-    return actionHandler(state, action);
+    const relevantActionHandler = actionHandler[action.type]
+      || actionHandler.default;
+    return relevantActionHandler(state, action);
   } catch (err) {
     log('reducer(): error: %o', err);
     return state;
@@ -48,7 +39,7 @@ function initializeStore({
 }
 
 export {
-  interpolatedActionType as ActionType,
+  ActionType,
   initializeStore,
 };
 
