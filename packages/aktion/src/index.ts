@@ -1,12 +1,6 @@
-import { logger } from 'jege';
-
-const log = logger('[aktion]');
-
 export function createActionType<AT extends ActionType>(
   rawActionType: AT,
 ): InterpolatedActionType<AT> {
-  log('rawActionType: %j', rawActionType);
-
   const interpolatedActionType = {} as any;
   Object.keys(rawActionType)
     .forEach((actionType) => {
